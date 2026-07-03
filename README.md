@@ -1,6 +1,6 @@
 # bevy_locomotion
 
-A first-person character controller for Bevy 0.18 and Avian3d. All
+A first-person character controller for Bevy and Avian3d. All
 movement is driven by physics raycasts via Avian3d spatial queries.
 
 - **Walk and sprint** with acceleration/friction ground movement model
@@ -258,3 +258,10 @@ cargo run --example gymnasium
 ```
 
 Enable placeholder audio with `--features gym-audio`.
+
+## Bevy compatibility
+
+| bevy   | bevy_locomotion     |
+| ------ | ------------------- |
+| 0.19.0 | 0.2                 |
+| 0.18.0 | 0.1                 |
