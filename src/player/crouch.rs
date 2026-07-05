@@ -10,7 +10,7 @@ pub fn update_crouch_state(
     mut query: Query<(
         Entity,
         &CrouchInput,
-        &PlayerConfig,
+        &CharacterMovementSettings,
         &LinearVelocity,
         &Transform,
         &SprintGrace,
@@ -107,7 +107,7 @@ pub fn update_crouch_state(
 /// Applies slide movement
 pub fn apply_slide(
     mut commands: Commands,
-    mut query: Query<(Entity, &PlayerConfig, &mut LinearVelocity, &Sliding)>,
+    mut query: Query<(Entity, &CharacterMovementSettings, &mut LinearVelocity, &Sliding)>,
     time: Res<Time>,
 ) {
     let current_time = time.elapsed_secs();
@@ -132,7 +132,7 @@ pub fn apply_slide(
 }
 
 /// Checks if there's room for the player to stand up
-fn can_stand_up(spatial_query: &SpatialQuery, position: Vec3, config: &PlayerConfig) -> bool {
+fn can_stand_up(spatial_query: &SpatialQuery, position: Vec3, config: &CharacterMovementSettings) -> bool {
     let height_diff = config.stand_height - config.crouch_height;
     let check_shape = Collider::capsule(config.radius * 0.9, height_diff);
 
@@ -153,7 +153,7 @@ fn can_stand_up(spatial_query: &SpatialQuery, position: Vec3, config: &PlayerCon
 
 /// Updates collider height based on crouch state
 pub fn update_collider_height(
-    mut query: Query<(&PlayerConfig, &mut Collider, Has<Crouching>), With<Player>>,
+    mut query: Query<(&CharacterMovementSettings, &mut Collider, Has<Crouching>), With<CharacterController>>,
 ) {
     for (config, mut collider, crouching) in &mut query {
         let target_height = if crouching {

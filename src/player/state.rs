@@ -1,7 +1,10 @@
-use avian3d::prelude::*;
+use avian3d::{math::*, prelude::*};
 use bevy::prelude::*;
 
 use crate::physics::GameLayer;
+
+#[derive(Component, Default)]
+pub struct DefaultInputContext;
 
 /// Marker component for the player entity (also used as input context)
 #[derive(Component, Default)]
@@ -11,11 +14,11 @@ use crate::physics::GameLayer;
     // We don't want to impart speculative collision impulses in this case
     SpeculativeMargin(0.0)
 )]
-pub struct Player;
+pub struct CharacterController;
 
 /// Player movement configuration
 #[derive(Component, Clone, Copy)]
-pub struct PlayerConfig {
+pub struct CharacterMovementSettings  {
     /// Walking speed in m/s
     pub walk_speed: f32,
     /// Sprinting speed in m/s
@@ -86,7 +89,7 @@ pub struct PlayerConfig {
     pub collision_mask: LayerMask,
 }
 
-impl Default for PlayerConfig {
+impl Default for CharacterMovementSettings {
     fn default() -> Self {
         Self {
             walk_speed: 5.0,
@@ -135,6 +138,24 @@ pub struct Grounded;
 /// Ground surface normal (set when grounded)
 #[derive(Component)]
 pub struct GroundNormal(pub Vec3);
+
+/// A component containing information about the current collisions for a character controller.
+///
+/// This is used to apply forces to dynamic rigid bodies hit by the character.
+#[derive(Component, Default, Deref)]
+pub struct CharacterCollisions(pub Vec<CharacterCollision>);
+
+/// Information about a collision between a character controller and another collider.
+pub struct CharacterCollision {
+    /// The collider that was hit by the character.
+    pub collider: Entity,
+    /// The point of contact in world space.
+    pub point: Vector,
+    /// The normal of the contact surface, pointing away from the character.
+    pub normal: Dir3,
+    /// The velocity of the character at the point of contact.
+    pub character_velocity: Vector,
+}
 
 /// Marker: player is sprinting
 #[derive(Component)]

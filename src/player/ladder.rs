@@ -19,8 +19,8 @@ pub fn detect_ladder(
     mut commands: Commands,
     spatial_query: SpatialQuery,
     query: Query<
-        (Entity, &Transform, &PlayerConfig, &MoveInput),
-        (With<Player>, Without<OnLadder>),
+        (Entity, &Transform, &CharacterMovementSettings, &MoveInput),
+        (With<CharacterController>, Without<OnLadder>),
     >,
     ladder_query: Query<&Transform, With<Ladder>>,
 ) {
@@ -75,13 +75,13 @@ pub fn apply_ladder_movement(
         (
             Entity,
             &Transform,
-            &PlayerConfig,
+            &CharacterMovementSettings,
             &mut LinearVelocity,
             &OnLadder,
             &MoveInput,
             &mut JumpPressed,
         ),
-        With<Player>,
+        With<CharacterController>,
     >,
     ladder_query: Query<(), With<Ladder>>,
 ) {

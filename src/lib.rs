@@ -30,7 +30,7 @@ pub mod prelude {
     pub use crate::physics::{GameLayer, PhysicsPlugin};
     pub use crate::player::{
         spawn_player, Crouching, ForceSlide, ForcedSliding, Grounded, Ladder, LedgeClimbing,
-        LedgeGrabbable, LedgeGrabbing, OnLadder, Player, PlayerAudioMessage, PlayerConfig,
+        LedgeGrabbable, LedgeGrabbing, OnLadder, CharacterController, PlayerAudioMessage, CharacterMovementSettings,
         PlayerPlugin, Sliding, Sprinting,
     };
     pub use crate::BevyLocomotionPlugin;

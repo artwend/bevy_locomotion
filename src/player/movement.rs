@@ -12,7 +12,7 @@ pub fn update_grounded_state(
     mut query: Query<(
         Entity,
         &Transform,
-        &PlayerConfig,
+        &CharacterMovementSettings,
         &LinearVelocity,
         &mut CoyoteTime,
         &mut AirTime,
@@ -75,7 +75,7 @@ pub fn ground_movement(
     mut query: Query<
         (
             &MoveInput,
-            &PlayerConfig,
+            &CharacterMovementSettings,
             &mut LinearVelocity,
             Has<Sprinting>,
             Has<Crouching>,
@@ -126,7 +126,7 @@ pub fn ground_movement(
 /// Applies air movement with reduced control
 pub fn air_movement(
     mut query: Query<
-        (&MoveInput, &PlayerConfig, &mut LinearVelocity),
+        (&MoveInput, &CharacterMovementSettings, &mut LinearVelocity),
         (Without<Grounded>, Without<LedgeGrabbing>, Without<LedgeClimbing>, Without<OnLadder>),
     >,
     yaw_query: Query<&Transform, With<CameraYaw>>,
@@ -180,16 +180,20 @@ pub fn apply_gravity(
 
 /// Performs move-and-slide, projecting onto ground surface when grounded
 pub fn apply_velocity(
+    // mut query: Query<
+    //     (&mut LinearVelocity, &CharacterMovementSettings, &mut LinearVelocity, ),
+    //     With<CharacterController>,
+    // >,
     mut query: Query<
         (
             Entity,
             Option<&Grounded>, Option<&GroundNormal>,
-            &PlayerConfig,
+            &CharacterMovementSettings,
             &mut Transform,
             &mut LinearVelocity,
             &Collider,
         ),
-        With<Player>,
+        With<CharacterController>,
     >,
     move_and_slide: MoveAndSlide,
     time: Res<Time>,
@@ -273,7 +277,7 @@ pub fn update_sprint_state(
     mut commands: Commands,
     mut query: Query<
         (Entity, &super::input::SprintInput, &mut SprintGrace, Has<Grounded>, Has<Crouching>),
-        With<Player>,
+        With<CharacterController>,
     >,
     time: Res<Time>,
 ) {

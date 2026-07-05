@@ -43,7 +43,7 @@ pub struct AudioTracker {
 pub fn emit_player_audio_messages(
     query: Query<
         (
-            &PlayerConfig,
+            &CharacterMovementSettings,
             &LinearVelocity,
             Has<Grounded>,
             Has<Sliding>,
@@ -52,7 +52,7 @@ pub fn emit_player_audio_messages(
             Has<OnLadder>,
             Has<ForcedSliding>,
         ),
-        With<Player>,
+        With<CharacterController>,
     >,
     mut tracker: ResMut<AudioTracker>,
     mut writer: MessageWriter<PlayerAudioMessage>,

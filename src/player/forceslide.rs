@@ -13,8 +13,8 @@ pub fn detect_forced_slide(
     mut commands: Commands,
     spatial_query: SpatialQuery,
     query: Query<
-        (Entity, &Transform, &PlayerConfig),
-        (With<Player>, With<Grounded>, Without<ForcedSliding>),
+        (Entity, &Transform, &CharacterMovementSettings),
+        (With<CharacterController>, With<Grounded>, Without<ForcedSliding>),
     >,
     surface_query: Query<(), With<ForceSlide>>,
     gravity: Res<Gravity>,
@@ -70,8 +70,8 @@ pub fn apply_forced_slide(
     mut commands: Commands,
     spatial_query: SpatialQuery,
     mut query: Query<
-        (Entity, &Transform, &PlayerConfig, &mut LinearVelocity, &ForcedSliding),
-        With<Player>,
+        (Entity, &Transform, &CharacterMovementSettings, &mut LinearVelocity, &ForcedSliding),
+        With<CharacterController>,
     >,
     surface_query: Query<(), With<ForceSlide>>,
     gravity: Res<Gravity>,

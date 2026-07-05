@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::player::{LookInput, Player};
+use crate::player::{LookInput, CharacterController};
 
 /// Marker for the yaw (horizontal rotation) entity
 #[derive(Component)]
@@ -37,7 +37,7 @@ pub struct PitchAngle(pub f32);
 
 /// Applies mouse look rotation to camera
 pub fn apply_mouse_look(
-    player_query: Query<&LookInput, With<Player>>,
+    player_query: Query<&LookInput, With<CharacterController>>,
     mut yaw_query: Query<&mut Transform, (With<CameraYaw>, Without<CameraPitch>)>,
     mut pitch_query: Query<(&mut Transform, &mut PitchAngle, &CameraConfig), With<CameraPitch>>,
 ) {
@@ -61,8 +61,8 @@ pub fn apply_mouse_look(
 
 /// Syncs the camera yaw position to follow the player
 pub fn sync_camera_to_player(
-    player_query: Query<&Transform, With<Player>>,
-    mut yaw_query: Query<&mut Transform, (With<CameraYaw>, Without<Player>)>,
+    player_query: Query<&Transform, With<CharacterController>>,
+    mut yaw_query: Query<&mut Transform, (With<CameraYaw>, Without<CharacterController>)>,
 ) {
     let Ok(player_transform) = player_query.single() else {
         return;

@@ -1,7 +1,7 @@
 use avian3d::prelude::LinearVelocity;
 use bevy::prelude::*;
 
-use crate::player::{Crouching, Grounded, Player, PlayerConfig};
+use crate::player::{Crouching, Grounded, CharacterController, CharacterMovementSettings};
 
 use super::CameraPitch;
 
@@ -75,7 +75,7 @@ impl Default for FpsCamera {
 
 /// Updates camera FOV based on player speed
 pub fn update_fov(
-    player_query: Query<(&LinearVelocity, &PlayerConfig), With<Player>>,
+    player_query: Query<(&LinearVelocity, &CharacterMovementSettings), With<CharacterController>>,
     mut camera_query: Query<(&mut Projection, &mut FpsCamera)>,
     time: Res<Time>,
 ) {
@@ -103,7 +103,7 @@ pub fn update_fov(
 
 /// Applies head bob based on movement speed
 pub fn apply_head_bob(
-    player_query: Query<(&LinearVelocity, Has<Grounded>), With<Player>>,
+    player_query: Query<(&LinearVelocity, Has<Grounded>), With<CharacterController>>,
     mut camera_query: Query<(&mut Transform, &mut FpsCamera), With<FpsCamera>>,
     time: Res<Time>,
 ) {
@@ -150,7 +150,7 @@ pub struct PreviousGroundedState {
 
 /// Applies view punch on landing - scales with impact velocity
 pub fn apply_view_punch(
-    player_query: Query<(&LinearVelocity, Has<Grounded>), With<Player>>,
+    player_query: Query<(&LinearVelocity, Has<Grounded>), With<CharacterController>>,
     mut camera_query: Query<&mut FpsCamera>,
     mut prev_state: ResMut<PreviousGroundedState>,
     time: Res<Time>,
@@ -197,7 +197,7 @@ pub fn apply_view_punch(
 
 /// Adjusts camera height for crouch
 pub fn update_camera_height(
-    player_query: Query<(&PlayerConfig, Has<Crouching>), With<Player>>,
+    player_query: Query<(&CharacterMovementSettings, Has<Crouching>), With<CharacterController>>,
     mut pitch_query: Query<&mut Transform, With<CameraPitch>>,
     time: Res<Time>,
 ) {

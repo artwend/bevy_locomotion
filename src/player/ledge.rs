@@ -25,7 +25,7 @@ pub fn detect_ledge_grab(
         (
             Entity,
             &Transform,
-            &PlayerConfig,
+            &CharacterMovementSettings,
             &LinearVelocity,
             &mut LedgeCooldown,
             &mut JumpPressed,
@@ -163,7 +163,7 @@ pub fn apply_ledge_grab(
     mut query: Query<(
         Entity,
         &mut Transform,
-        &PlayerConfig,
+        &CharacterMovementSettings,
         &mut LinearVelocity,
         &mut LedgeGrabbing,
         &mut JumpPressed,

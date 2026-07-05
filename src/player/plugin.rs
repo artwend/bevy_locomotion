@@ -29,7 +29,7 @@ impl Plugin for PlayerPlugin {
         }
 
         // Register input context for player
-        app.add_input_context::<Player>();
+        app.add_input_context::<DefaultInputContext>();
 
         // Audio messages
         app.add_message::<PlayerAudioMessage>();
@@ -87,7 +87,7 @@ impl Plugin for PlayerPlugin {
 }
 
 /// Spawns the player entity with all required components
-pub fn spawn_player(commands: &mut Commands, config: PlayerConfig, position: Vec3) {
+pub fn spawn_player(commands: &mut Commands, config: CharacterMovementSettings, position: Vec3) {
     // Spawn yaw entity (rotates on Y axis for left/right look)
     let yaw_entity = commands
         .spawn((
@@ -130,7 +130,7 @@ pub fn spawn_player(commands: &mut Commands, config: PlayerConfig, position: Vec
 
     commands
         .spawn((
-            Player,
+            CharacterController,
             config,
             CoyoteTime::default(),
             JumpBuffer::default(),
@@ -161,9 +161,10 @@ pub fn spawn_player(commands: &mut Commands, config: PlayerConfig, position: Vec
             Transform::from_translation(position),
             Visibility::default(),
         ))
-        .insert(
+        .insert((
+            DefaultInputContext,
             // Input bindings
-            actions!(Player[
+            actions!(DefaultInputContext[
                 (
                     Action::<MoveAction>::new(),
                     bindings![
@@ -192,5 +193,5 @@ pub fn spawn_player(commands: &mut Commands, config: PlayerConfig, position: Vec
                     bindings![KeyCode::ControlLeft, GamepadButton::RightThumb],
                 ),
             ]),
-        );
+        ));
 }

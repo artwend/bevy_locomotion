@@ -30,7 +30,7 @@ fn setup(
     materials: ResMut<Assets<StandardMaterial>>,
     images: ResMut<Assets<Image>>,
 ) {
-    spawn_player(&mut commands, PlayerConfig::default(), Vec3::new(0.0, 2.0, 0.0));
+    spawn_player(&mut commands, CharacterMovementSettings::default(), Vec3::new(0.0, 2.0, 0.0));
     spawn_gymnasium(commands, meshes, materials, images);
 }
 
@@ -69,7 +69,7 @@ fn spawn_hud(mut commands: Commands) {
 }
 
 fn update_hud(
-    player_query: Query<(&LinearVelocity, &Transform, Has<Grounded>), With<Player>>,
+    player_query: Query<(&LinearVelocity, &Transform, Has<Grounded>), With<CharacterController>>,
     mut hud_query: Query<&mut Text, With<HudText>>,
     mut tracker: ResMut<JumpTracker>,
 ) {
