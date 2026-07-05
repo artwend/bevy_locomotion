@@ -1,6 +1,5 @@
 use avian3d::prelude::*;
 use bevy::prelude::*;
-use avian3d::prelude::*;
 
 use super::input::{JumpHeld, JumpPressed};
 use super::state::*;
