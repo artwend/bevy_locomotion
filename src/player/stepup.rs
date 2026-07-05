@@ -13,7 +13,7 @@ use super::state::*;
 pub fn apply_step_up(
     spatial_query: SpatialQuery,
     mut query: Query<
-        (&mut Transform, &PlayerConfig, &PlayerVelocity),
+        (&mut Transform, &PlayerConfig, &LinearVelocity),
         With<Grounded>,
     >,
     mut writer: MessageWriter<PlayerAudioMessage>,

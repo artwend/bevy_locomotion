@@ -191,7 +191,7 @@ your own systems:
 ```rust
 fn my_system(
     query: Query<(
-        &PlayerVelocity,
+        &LinearVelocity,
         &Transform,
         Has<Grounded>,
         Has<Sprinting>,

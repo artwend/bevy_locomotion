@@ -69,7 +69,7 @@ fn spawn_hud(mut commands: Commands) {
 }
 
 fn update_hud(
-    player_query: Query<(&PlayerVelocity, &Transform, Has<Grounded>), With<Player>>,
+    player_query: Query<(&LinearVelocity, &Transform, Has<Grounded>), With<Player>>,
     mut hud_query: Query<&mut Text, With<HudText>>,
     mut tracker: ResMut<JumpTracker>,
 ) {
