@@ -47,6 +47,13 @@ pub fn apply_step_up(
             continue;
         };
 
+        // Skip if the foot hit is a slope rather than a vertical step face.
+        // On slopes the ground rises gradually — the normal has a significant
+        // upward component. A true step/curb has a near-vertical face (normal.y ≈ 0).
+        if foot_hit.normal.dot(Vec3::Y).abs() > 0.3 {
+            continue;
+        }
+
         // Ray 2: step height — must MISS (space above obstacle)
         let step_origin = center + Vec3::Y * (-half_height + config.step_up_height);
         let step_hit = spatial_query.cast_ray(
